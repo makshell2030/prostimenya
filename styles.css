@@ -1,0 +1,266 @@
+/* Custom CSS for heart shape and 3D effects */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
+
+.heart-shape {
+    position: relative;
+    width: clamp(360px, 88vw, 540px);
+    height: clamp(460px, 72vh, 620px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 240, 245, 0.95));
+    border: 3px solid rgba(214, 51, 132, 0.3);
+    border-radius: 20px;
+    box-shadow: 
+        0 0 0 5px rgba(214, 51, 132, 0.1),
+        0 15px 35px rgba(214, 51, 132, 0.3),
+        inset 0 0 30px rgba(214, 51, 132, 0.05);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* When absolutely positioned, center the heart perfectly */
+.heart-shape.absolute {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Big decorative heart behind content */
+.heart-shape::before {
+    content: '♥';
+    position: absolute;
+    font-size: clamp(280px, 55vw, 520px);
+    color: rgba(214, 51, 132, 0.1);
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+}
+
+.heart-content {
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    height: 92%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+
+
+.book-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Smooth page transitions - handled by JavaScript */
+.page-container {
+    position: relative;
+    overflow: hidden; /* Prevent horizontal scrollbars during transition */
+}
+
+/* Disable button hover effects during transitions */
+.transitioning button {
+    pointer-events: none;
+}
+
+.gradient-text {
+    background: linear-gradient(45deg, #d63384, #e91e63);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 10;
+}
+
+/* Envelope intro */
+.envelope {
+    position: relative;
+    width: 360px;
+    height: 220px;
+    margin: 0 auto 1.5rem auto;
+    perspective: 1000px;
+}
+.envelope__back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #fff, #ffe4ec);
+    border: 2px solid rgba(214, 51, 132, 0.25);
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(214, 51, 132, 0.25);
+    z-index: 1;
+}
+.envelope__front {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 62%;
+    background: linear-gradient(180deg, #ffe9f2, #ffd4e5);
+    border: 2px solid rgba(214, 51, 132, 0.25);
+    border-top: none;
+    border-radius: 0 0 14px 14px;
+    z-index: 3;
+}
+.envelope__flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 58%;
+    background: linear-gradient(180deg, #ffd4e5, #ffc1da);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 4;
+}
+.envelope__letter {
+    position: absolute;
+    left: 4%;
+    top: 26%;
+    width: 92%;
+    height: 70%;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(214, 51, 132, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 1rem 1rem;
+    z-index: 2;
+    transform: translateY(0);
+    transition: transform 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+}
+.envelope.open .envelope__flap {
+    transform: rotateX(-180deg); /* Flap goes completely back/behind */
+    z-index: 1; /* Put flap behind everything when open */
+}
+.envelope.open .envelope__letter {
+    transform: translateY(-80%) scale(1.1); /* Letter emerges partially with slight growth */
+    z-index: 5; /* Letter comes to front when emerging */
+}
+
+/* Envelope card fade out - smoother and longer */
+#envelope-card.fade-out {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+    transition: opacity 0.8s cubic-bezier(0.4, 0.0, 0.2, 1), 
+                transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Hide the glassmorphism background during envelope opening */
+#envelope-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Book container with smooth entry animation */
+#book {
+    position: relative;
+    z-index: 40; /* Below envelope during opening */
+    transition: opacity 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Envelope card positioning and transitions */
+#envelope-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 50;
+    transition: all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Envelope card during opening gets smooth transition */
+#envelope-card.opening {
+    background: transparent;
+    backdrop-filter: none;
+    border: 1px solid transparent;
+    box-shadow: none;
+    z-index: 50; /* Stay above book during transition */
+}
+
+/* Book nav buttons - pill & comfy */
+.book-nav {
+    display: flex;
+    gap: 12px;
+}
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #f472b6, #ec4899);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(236, 72, 153, 0.35);
+    transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.nav-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(236,72,153,.45); }
+.nav-btn:disabled { opacity: .5; cursor: not-allowed; }
+.nav-btn--secondary { background: #ffe3ee; color: #b91c1c; box-shadow: none; }
+.nav-btn--secondary:hover { background: #ffd3e6; }
+
+/* Improve readability inside heart */
+.heart-content p { line-height: 1.9; font-size: 1.125rem; }
+.heart-content p + p { margin-top: .6rem; }
+
+/* Letter-like text block inside pages */
+.letter-text {
+    max-width: 80%;
+    margin: 0 auto; /* center block in the heart */
+    text-align: justify; /* letter look */
+    text-justify: inter-word;
+    line-height: 1.75;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    text-wrap: pretty;
+    max-height: none; /* let the outer card grow */
+    overflow: visible;
+}
+.letter-text p { margin: 0 0 0.9rem 0; text-indent: 1.25em; }
+.letter-text p:last-child { margin-bottom: 0; }
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .heart-shape {
+        width: clamp(320px, 92vw, 440px);
+        height: clamp(460px, 78vh, 560px);
+    }
+    
+    .heart-shape::before {
+        font-size: clamp(240px, 60vw, 440px);
+    }
+    
+    .heart-content {
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
+    .envelope { width: 330px; height: 200px; }
+    .letter-text { max-width: 86%; line-height: 1.7; max-height: none; }
+}
+
+/* Very short screens: tighten text slightly and expand height */
+@media (max-height: 700px) {
+    .heart-shape { height: clamp(520px, 86vh, 700px); }
+    .heart-content p { font-size: 1rem; line-height: 1.7; }
+    .letter-text { max-width: 88%; }
+}
