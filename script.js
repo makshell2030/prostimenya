@@ -1,7 +1,7 @@
 class LoveBook {
     constructor() {
         this.currentPage = 1;
-        this.totalPages = 16;  // Updated to 16 pages after removing duplicate
+        this.totalPages = 25;  // Updated to 25 pages for proper image organization
         this.startDate = new Date('2023-10-09T00:00:00');
         this.isTransitioning = false; // Prevent rapid clicking
         this.init();

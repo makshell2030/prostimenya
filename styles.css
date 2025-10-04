@@ -1,21 +1,26 @@
-/* Custom CSS for heart shape and 3D effects */
+/* Mobile-First Responsive Design for iPhone 16 */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
 
+/* Base mobile styles (iPhone 16: 393x852) */
 .heart-shape {
     position: relative;
-    width: clamp(360px, 88vw, 540px);
-    height: clamp(460px, 72vh, 620px);
+    width: 90vw;
+    max-width: 360px;
+    height: 70vh;
+    min-height: 500px;
+    max-height: 650px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 240, 245, 0.95));
-    border: 3px solid rgba(214, 51, 132, 0.3);
+    border: 2px solid rgba(214, 51, 132, 0.3);
     border-radius: 20px;
     box-shadow: 
-        0 0 0 5px rgba(214, 51, 132, 0.1),
-        0 15px 35px rgba(214, 51, 132, 0.3),
-        inset 0 0 30px rgba(214, 51, 132, 0.05);
-    backdrop-filter: blur(10px);
+        0 0 0 3px rgba(214, 51, 132, 0.1),
+        0 10px 25px rgba(214, 51, 132, 0.25),
+        inset 0 0 20px rgba(214, 51, 132, 0.05);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0 auto;
 }
 
 /* When absolutely positioned, center the heart perfectly */
@@ -25,12 +30,12 @@
     transform: translate(-50%, -50%);
 }
 
-/* Big decorative heart behind content */
+/* Big decorative heart behind content - mobile optimized */
 .heart-shape::before {
     content: '♥';
     position: absolute;
-    font-size: clamp(280px, 55vw, 520px);
-    color: rgba(214, 51, 132, 0.1);
+    font-size: min(45vw, 280px);
+    color: rgba(214, 51, 132, 0.08);
     z-index: 1;
     top: 50%;
     left: 50%;
@@ -41,32 +46,31 @@
 .heart-content {
     position: relative;
     z-index: 10;
-    width: 90%;
-    height: 92%;
+    width: 92%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 2rem;
+    padding: 1rem;
+    overflow: hidden; /* No scrolling within pages */
 }
-
-
 
 .book-3d {
     transform-style: preserve-3d;
     perspective: 1000px;
     position: relative;
     z-index: 10;
+    width: 100%;
 }
 
-/* Smooth page transitions - handled by JavaScript */
+/* Page transitions */
 .page-container {
     position: relative;
-    overflow: hidden; /* Prevent horizontal scrollbars during transition */
+    overflow: hidden;
 }
 
-/* Disable button hover effects during transitions */
 .transitioning button {
     pointer-events: none;
 }
@@ -80,29 +84,31 @@
 
 .glassmorphism {
     background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     position: relative;
     z-index: 10;
 }
 
-/* Envelope intro */
+/* Mobile-first envelope styles */
 .envelope {
     position: relative;
-    width: 360px;
-    height: 220px;
-    margin: 0 auto 1.5rem auto;
+    width: min(280px, 80vw);
+    height: min(180px, 50vw);
+    margin: 0 auto 1rem auto;
     perspective: 1000px;
 }
+
 .envelope__back {
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, #fff, #ffe4ec);
     border: 2px solid rgba(214, 51, 132, 0.25);
-    border-radius: 14px;
-    box-shadow: 0 12px 30px rgba(214, 51, 132, 0.25);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(214, 51, 132, 0.2);
     z-index: 1;
 }
+
 .envelope__front {
     position: absolute;
     left: 0;
@@ -112,9 +118,10 @@
     background: linear-gradient(180deg, #ffe9f2, #ffd4e5);
     border: 2px solid rgba(214, 51, 132, 0.25);
     border-top: none;
-    border-radius: 0 0 14px 14px;
+    border-radius: 0 0 12px 12px;
     z-index: 3;
 }
+
 .envelope__flap {
     position: absolute;
     top: 0;
@@ -127,6 +134,7 @@
     transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     z-index: 4;
 }
+
 .envelope__letter {
     position: absolute;
     left: 4%;
@@ -134,133 +142,242 @@
     width: 92%;
     height: 70%;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(214, 51, 132, 0.25);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(214, 51, 132, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1.25rem 1rem 1rem;
+    padding: 0.75rem;
     z-index: 2;
     transform: translateY(0);
     transition: transform 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
 }
+
 .envelope.open .envelope__flap {
-    transform: rotateX(-180deg); /* Flap goes completely back/behind */
-    z-index: 1; /* Put flap behind everything when open */
-}
-.envelope.open .envelope__letter {
-    transform: translateY(-80%) scale(1.1); /* Letter emerges partially with slight growth */
-    z-index: 5; /* Letter comes to front when emerging */
+    transform: rotateX(-180deg);
+    z-index: 1;
 }
 
-/* Envelope card fade out - smoother and longer */
+.envelope.open .envelope__letter {
+    transform: translateY(-80%) scale(1.1);
+    z-index: 5;
+}
+
+/* Mobile-optimized navigation buttons */
+.book-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #f472b6, #ec4899);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    min-height: 36px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.nav-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.nav-btn--secondary {
+    background: #ffe3ee;
+    color: #b91c1c;
+    box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2);
+}
+
+.nav-btn--secondary:hover {
+    background: #ffd3e6;
+}
+
+/* Mobile-optimized text styles */
+.heart-content p {
+    line-height: 1.6;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.letter-text {
+    max-width: 95%;
+    margin: 0 auto;
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+.letter-text p {
+    margin: 0 0 0.75rem 0;
+    text-indent: 1em;
+    font-size: 0.85rem;
+}
+
+.letter-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* Envelope fade animations */
 #envelope-card.fade-out {
     opacity: 0;
-    transform: translateY(-20px) scale(0.95);
-    transition: opacity 0.8s cubic-bezier(0.4, 0.0, 0.2, 1), 
-                transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform: translateY(-15px) scale(0.95);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-/* Hide the glassmorphism background during envelope opening */
 #envelope-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: all 0.4s ease;
 }
 
-/* Book container with smooth entry animation */
 #book {
-    position: relative;
-    z-index: 40; /* Below envelope during opening */
-    transition: opacity 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                transform 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* Envelope card positioning and transitions */
-#envelope-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-    z-index: 50;
-    transition: all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-/* Envelope card during opening gets smooth transition */
 #envelope-card.opening {
     background: transparent;
     backdrop-filter: none;
     border: 1px solid transparent;
     box-shadow: none;
-    z-index: 50; /* Stay above book during transition */
+    z-index: 50;
 }
 
-/* Book nav buttons - pill & comfy */
-.book-nav {
-    display: flex;
-    gap: 12px;
-}
-.nav-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    border-radius: 9999px;
-    background: linear-gradient(90deg, #f472b6, #ec4899);
-    color: #fff;
-    box-shadow: 0 8px 18px rgba(236, 72, 153, 0.35);
-    transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
-}
-.nav-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(236,72,153,.45); }
-.nav-btn:disabled { opacity: .5; cursor: not-allowed; }
-.nav-btn--secondary { background: #ffe3ee; color: #b91c1c; box-shadow: none; }
-.nav-btn--secondary:hover { background: #ffd3e6; }
-
-/* Improve readability inside heart */
-.heart-content p { line-height: 1.9; font-size: 1.125rem; }
-.heart-content p + p { margin-top: .6rem; }
-
-/* Letter-like text block inside pages */
-.letter-text {
-    max-width: 80%;
-    margin: 0 auto; /* center block in the heart */
-    text-align: justify; /* letter look */
-    text-justify: inter-word;
-    line-height: 1.75;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-    overflow-wrap: break-word;
-    text-wrap: pretty;
-    max-height: none; /* let the outer card grow */
-    overflow: visible;
-}
-.letter-text p { margin: 0 0 0.9rem 0; text-indent: 1.25em; }
-.letter-text p:last-child { margin-bottom: 0; }
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
+/* Tablet styles (768px and up) */
+@media (min-width: 768px) {
     .heart-shape {
-        width: clamp(320px, 92vw, 440px);
-        height: clamp(460px, 78vh, 560px);
+        width: min(450px, 80vw);
+        height: min(600px, 75vh);
+        max-height: 700px;
     }
     
     .heart-shape::before {
-        font-size: clamp(240px, 60vw, 440px);
+        font-size: min(350px, 40vw);
     }
     
     .heart-content {
         padding: 1.5rem;
-        font-size: 1rem;
     }
-    .envelope { width: 330px; height: 200px; }
-    .letter-text { max-width: 86%; line-height: 1.7; max-height: none; }
+    
+    .heart-content p {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    
+    .letter-text p {
+        font-size: 0.95rem;
+    }
+    
+    .envelope {
+        width: 320px;
+        height: 200px;
+    }
+    
+    .nav-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
 }
 
-/* Very short screens: tighten text slightly and expand height */
-@media (max-height: 700px) {
-    .heart-shape { height: clamp(520px, 86vh, 700px); }
-    .heart-content p { font-size: 1rem; line-height: 1.7; }
-    .letter-text { max-width: 88%; }
+/* Desktop styles (1024px and up) */
+@media (min-width: 1024px) {
+    .heart-shape {
+        width: min(540px, 85vw);
+        height: min(620px, 80vh);
+    }
+    
+    .heart-shape::before {
+        font-size: min(400px, 35vw);
+    }
+    
+    .heart-content {
+        padding: 2rem;
+    }
+    
+    .heart-content p {
+        font-size: 1.125rem;
+        line-height: 1.8;
+    }
+    
+    .letter-text {
+        max-width: 85%;
+        line-height: 1.75;
+    }
+    
+    .letter-text p {
+        font-size: 1rem;
+        margin-bottom: 0.9rem;
+        text-indent: 1.25em;
+    }
+    
+    .envelope {
+        width: 360px;
+        height: 220px;
+    }
+    
+    .nav-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+}
+
+/* iPhone specific optimizations */
+@media (max-width: 430px) and (max-height: 950px) {
+    .heart-shape {
+        width: 92vw;
+        height: 65vh;
+        min-height: 450px;
+    }
+    
+    .heart-content {
+        padding: 0.75rem;
+    }
+    
+    .letter-text p {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+    
+    .nav-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+    .heart-shape {
+        height: 85vh;
+        min-height: 380px;
+    }
+    
+    .heart-content {
+        padding: 0.5rem;
+    }
+    
+    .letter-text p {
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
 }
